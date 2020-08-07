@@ -1,0 +1,38 @@
+<div class="swag-container" [hidden]="!cards.length">
+
+  <div class="swag-status">
+
+    <div [style.opacity]="dislike ? '1' : '0'">
+      <i class="fa fa-times fa-4x"></i>
+    </div>
+
+    <div [style.opacity]="like ? '1' : '0'">
+      <i class="fa fa-heart fa-4x"></i>
+    </div>
+
+  </div>
+
+  <div class="swag-cards" (pan)="panHandler($event)" (panend)="panEndHandler($event)">
+
+    <div #swagCards *ngFor="let card of cards; let i = index"
+         class="swag-card content-center" (transitionend)="shiftHandler()"
+         [ngStyle]="{zIndex: cards.length - i, transform: 'scale(' + (20 - i) / 20 + ') translateY(-' + (20 * i) + 'px)'}">
+      <div>
+        <img #swagCardImage [src]="card.icon" [alt]="card.name" (load)="swagCardImage.style.opacity = 1"/>
+        <h3>{{card.name}}</h3>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="content-center" style="height: 85%" *ngIf="!cards.length">
+
+  <div style="text-align: center">
+    <h2>Reload Cards</h2>
+
+    <i class="fa fa-undo fa-3x" (click)="resetCard()"></i>
+  </div>
+
+</div>
